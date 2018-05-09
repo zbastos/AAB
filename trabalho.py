@@ -2,6 +2,9 @@ import allel
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.plotly as py
+from pattern_search import Trie, SuffixTrie
+
+allmutations = {}
 
 def getVariants(fileName):
 	data = allel.read_vcf(fileName)
@@ -100,9 +103,49 @@ def ex1():
 	print("--------------------------")
 
 
+def compact(self):
+	tam = len(self.nodes.keys())-1
+	pos = 2
+	string = ""
+	while(pos!=tam):
+		if(len(self.nodes[pos][1])==1):
+			ini = list(self.nodes.keys())[pos]
+			#print("ini "+str(ini))
+			apagar = []
+			while(self.nodes[pos][0]<0):
+				if(self.nodes[pos][0]<0 and pos!=ini):
+					apagar.append(pos)
+					#print(apagar)
+				string+=(list(self.nodes[pos][1].keys())[0])
+				pos = list(self.nodes[pos][1].values())[0]
+				#print("pos"+str(pos))
+				#print(string)
+				#print(self.nodes[pos][0])
+			self.nodes[ini][1][string] = pos
+			self.nodes[ini][1].pop(string[0],None)
+			for i in apagar:
+				#print(i)
+				self.nodes.pop(i,None)
+			#print(self.nodes[ini][1])
+			print(self.nodes)
+		else:
+			#for k in self.nodes[pos][1].values():
+			pos = 13
+			#pos = 9
+
+	
+
+def ex2():
+	
+	seq = "ATAA"
+	st = SuffixTrie()
+	st.suffixTrieFromSeq(seq)
+	st.print_tree()
+	ct = compact(st)
+
 if __name__=="__main__":
 
-	ex1()
+	#ex1()
 
-	#ex2()
+	ex2()
 
