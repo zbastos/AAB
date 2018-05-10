@@ -102,87 +102,13 @@ def ex1():
 	print("Inserções - "+str(ad))
 	print("--------------------------")
 
-'''
-def compact(self):
-	tam = len(self.nodes.keys())-1 #13
-	pos = 2
-	apagados = 0
-	string = ""
-	while(pos!=tam):
-		if(len(self.nodes[pos][1])==1):
-			ini = list(self.nodes.keys())[pos] - apagados
-			print("ini "+str(ini))
-			apagar = []
-			while(self.nodes[pos][0]<0):
-				if(self.nodes[pos][0]<0 and pos!=ini):
-					apagar.append(pos)
-					print(apagar)
-				string+=(list(self.nodes[pos][1].keys())[0])
-				pos = list(self.nodes[pos][1].values())[0]
-				print("pos"+str(pos))
-				print(string)
-				print(self.nodes[pos][0])
-			self.nodes[ini][1][string] = pos
-			self.nodes[ini][1].pop(string[0],None)
-			for i in apagar:
-				self.nodes.pop(i,None)
-				apagados += 1
-			print(self.nodes[ini][1])
-			print(self.nodes)
-			string = []
-			pos+=1
-		else:
-			#for k in self.nodes[pos][1].values():
-			pos = 13
-			#pos = 9
 
-
-def test(self):
-	apagados = 0
-	string = ""
-
-	for i in self.nodes.keys():
-		for k,v in self.nodes[i][1].items():
-			symbol = k
-			pos = v
-			seg = (self.nodes[pos][1])
-			print(pos)
-			if len(seg)==1:
-				ini = list(self.nodes.keys())[pos] - apagados
-				print("ini "+str(ini))
-				apagar = []
-				while(self.nodes[pos][0]<0):
-					if(self.nodes[pos][0]<0 and pos!=ini):
-						apagar.append(pos)
-						print(apagar)
-					string+=(list(self.nodes[pos][1].keys())[0])
-					pos = list(self.nodes[pos][1].values())[0]
-					print("pos"+str(pos))
-					print(string)
-					print(self.nodes[pos][0])
-				self.nodes[ini][1][string] = pos
-				self.nodes[ini][1].pop(string[0],None)
-				for i in apagar:
-					self.nodes.pop(i,None)
-					apagados += 1
-				print(self.nodes[ini][1])
-				print(self.nodes)
-				string = []
-				pos+=1
-			else:
-				print("NNN")
-'''
 def compactaux(self,x):
-	apagados = 0
-	it = 0
-	for k,v in self.nodes[x][1].items():
-		it+=1
-		string = k
-		pos = v
+	for string,pos in self.nodes[x][1].items():
 		seg = (self.nodes[pos][1])
 		if len(seg)==1:
 			apagar = []
-			while(self.nodes[pos][0]<0):
+			while(self.nodes[pos][0]<0 and len(self.nodes[pos][1].values())==1):
 				if(self.nodes[pos][0]<0 and pos!=x):
 					apagar.append(pos)
 				string+=(list(self.nodes[pos][1].keys())[0])
@@ -191,7 +117,6 @@ def compactaux(self,x):
 			self.nodes[x][1].pop(string[0],None)
 			for i in apagar:
 				self.nodes.pop(i,None)
-				apagados += 1
 		else:
 			compactaux(self,pos)
 		
@@ -205,17 +130,121 @@ def compact(self):
 	print("		ÁRVORE DEPOIS DA COMPACTAÇÃO")
 	print("----------------------------------------------------------")
 	self.print_tree()
+'''
+def findPattern(self, pattern):
+    pos = 0
+    node = 0
+    while (pos != (len(pattern))):
+        string = ""
+        primelems = list(k[0] for k in list(self.nodes[node][1].keys()))
+        elems = list(k for k in list(self.nodes[node][1].keys()))
+        print("coiso"+pattern[pos])
+        if pattern[pos] in primelems:
+            indice = primelems.index(pattern[pos])
+            string+=pattern[pos]
+            print("aqui")
+            print(elems[indice])
+            if len(elems[indice])==1:
+                print("1")
+                node = self.nodes[node][1][pattern[pos]]
+                pos += 1
+            else:
+                print("2")
+                #print(elems[indice][pos])
+                #print(pattern[pos])
+                while(elems[indice][pos]==pattern[pos] and pos != len(elems[indice])-1):
+                    print("3")
+                    pos += 1
+                    string+=pattern[pos]
+                    #print(elems[indice][pos])
+                    #print(pattern[pos])
+                    #print(pos)
+                    #print(len(pattern))
+                if(pos==len(pattern)-1):
+                    print("welelelelel")
+                    print(node)
+                    print(primelems)
+                    print(string)
+                    pos += 1
+                    node = self.nodes[node][1][elems[indice]]
+                    
+                else:
+                    print("4")
+                    print(string)
+                    print(node)
+                    node = self.nodes[node][1][string]
+                    pos += 1
+                    print(node)
+                    print(pattern[pos])                    
+        else:
+            return None
+    return getLeafesBelow(self,node)
+'''
+
+def findPattern(self, pattern):
+    pos = 0
+    node = 0
+    while (pos != (len(pattern))):
+        string = ""
+        primelems = list(k[0] for k in list(self.nodes[node][1].keys()))
+        elems = list(k for k in list(self.nodes[node][1].keys()))
+
+        if pattern[pos] in primelems:
+
+            indice = primelems.index(pattern[pos])
+            string+=pattern[pos]
+
+            if len(elems[indice])==1:
+
+                node = self.nodes[node][1][pattern[pos]]
+                pos += 1
+
+            else:
+                while(elems[indice][pos]==pattern[pos] and pos != len(elems[indice])-1):
+
+                    pos += 1
+                    string+=pattern[pos]
+
+                if(pos==len(pattern)-1):
+                    pos += 1
+                    node = self.nodes[node][1][elems[indice]]
+                    
+                else:
+                    node = self.nodes[node][1][string]
+                    pos += 1                  
+        else:
+            return None
+    return getLeafesBelow(self,node)
+
+def getLeafesBelow(self, node):
+        res = []
+        if self.nodes[node][0] >= 0:
+        	res.append(self.nodes[node][0])
+        else:
+            for k in self.nodes[node][1].keys():
+            	newnode = self.nodes[node][1][k]
+            	leafes = getLeafesBelow(self,newnode)
+            	res.extend(leafes)
+        return res
 
 def ex2():
 	
-	seq = "ATGAAC"
+	seq = "AATGAAC"
 	st = SuffixTrie()
 	st.suffixTrieFromSeq(seq)
-	sim = compact(st)
+	compact(st)
+	padrao = "AA"
+	print("----------------------------------------------------------")
+	print("		PROCURA DO PADRÃO *"+padrao+"* NA ÁRVORE")
+	print("----------------------------------------------------------")
+	posicoes = findPattern(st,"AA")
+	print("POSIÇÕES: ")
+	posicoes.sort()
+	print(posicoes)
 
 if __name__=="__main__":
 
-	#ex1()
+	ex1()
 
 	ex2()
 
