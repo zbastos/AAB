@@ -193,17 +193,18 @@ def findPattern(self, pattern):
 
             indice = primelems.index(pattern[pos])
             string+=pattern[pos]
-
+            
             if len(elems[indice])==1:
 
                 node = self.nodes[node][1][pattern[pos]]
                 pos += 1
 
             else:
-                while(elems[indice][pos]==pattern[pos] and pos != len(elems[indice])-1):
+                while(elems[indice][pos]==pattern[pos] and pos != len(pattern)-1):
 
                     pos += 1
                     string+=pattern[pos]
+                    
 
                 if(pos==len(pattern)-1):
                     pos += 1
@@ -227,9 +228,26 @@ def getLeafesBelow(self, node):
             	res.extend(leafes)
         return res
 
+def repeats(st,seq,k,ocs):
+	pos = 0
+	res = []
+	print(len(seq)-k)
+	for pos in range(len(seq)-k):
+		pat = seq[pos:pos+k]
+		print(pat)
+		find = findPattern(st,pat)
+		print(find)
+		if len(find) >= ocs:
+			res.append(pat)
+	print(set(res))
+
+
+
+
+
 def ex2():
 	
-	seq = "AATGAAC"
+	seq = "GTAACTAAGAA"
 	st = SuffixTrie()
 	st.suffixTrieFromSeq(seq)
 	compact(st)
@@ -241,10 +259,12 @@ def ex2():
 	print("POSIÇÕES: ")
 	posicoes.sort()
 	print(posicoes)
+	print("||||||||||||||||||||||||||||")
+	#repeats(st,seq,2,3)
 
 if __name__=="__main__":
 
-	ex1()
+	#ex1()
 
 	ex2()
 
