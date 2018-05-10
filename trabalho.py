@@ -130,81 +130,7 @@ def compact(self):
 	print("		ÁRVORE DEPOIS DA COMPACTAÇÃO")
 	print("----------------------------------------------------------")
 	self.print_tree()
-'''
-def findPattern(self, pattern):
-    pos = 0
-    node = 0
-    outrpos = 0
-    while (pos != (len(pattern))):
-        string = ""
-        primelems = list(k[0] for k in list(self.nodes[node][1].keys()))
-        print("11")
-        print(pos)
-        print(len(pattern))
-        elems = list(k for k in list(self.nodes[node][1].keys()))
 
-        if pattern[pos] in primelems:
-            print("22")
-
-            indice = primelems.index(pattern[pos])
-            string+=pattern[pos]
-            outrpos = 0
-
-            if len(elems[indice])==1:
-                print("TTT")
-
-                node = self.nodes[node][1][pattern[pos]]
-                pos += 1
-                
-
-            else:
-                while(elems[indice][outrpos]==pattern[pos] and pos != len(elems[indice])-1 and pos != len(pattern)-1):
-
-                    print("93")
-                    print(elems[indice][outrpos])
-                    print(pattern[pos])
-                    #print(len(elems[indice])-1)
-                    pos += 1
-                    outrpos += 1
-                    string+=elems[indice][pos]
-                    print(string)
-                    
-                if(elems[indice][outrpos]!=pattern[pos]):
-                    print("aqui")
-                    print(elems)
-                    print(elems[indice][outrpos])
-                    print(pattern[pos])
-                    return None
-
-                elif(pos==len(pattern)-1):
-                    print("44")
-                    print(elems[indice][outrpos])
-                    print(pattern[pos])
-                    pos += 1
-                    outrpos += 1
-                    print(pos)
-                    node = self.nodes[node][1][elems[indice]]
-                    print(node)
-                    
-                else:
-                    print("55")
-                    newpos = 0
-                    if string in primelems:
-                        ind = primelems.index(string)
-                        string = elems[ind]
-                    while(elems[indice][newpos]==pattern[pos] and newpos != len(elems[indice])-1 and pos != len(pattern)-1):
-                        print("60")
-                        pos += 1
-                        newpos += 1
-                    node = self.nodes[node][1][string]
-                    print(node)
-                    pos += 1
-                    print(elems[indice][newpos])                  
-        else:
-            return None
-    return getLeafesBelow(self,node)
-
-'''
 def findPattern(self, pattern):
     pos = 0
     node = 0
@@ -253,6 +179,7 @@ def findPattern(self, pattern):
         else:
             return None
     return getLeafesBelow(self,node)
+
 def getLeafesBelow(self, node):
         res = []
         if self.nodes[node][0] >= 0:
@@ -295,11 +222,13 @@ def getSeq(self,node,string):
 
 def ex2():
 	
-	seq = "TACTA"
+	seq = input("Sequência da árvore: ")
 	st = SuffixTrie()
 	st.suffixTrieFromSeq(seq)
 	compact(st)
-	padrao = "TA"
+
+
+	padrao = input("Padrão: ")
 	print("----------------------------------------------------------------------")
 	print("		PROCURA DO PADRÃO *"+padrao+"* NA ÁRVORE")
 	print("----------------------------------------------------------------------")
@@ -308,8 +237,10 @@ def ex2():
 	if posicoes!=None:
 		posicoes.sort()
 	print(posicoes)
-	k=2
-	ocs=2
+
+
+	k=int(input("k: "))
+	ocs=int(input("ocs: "))
 	print("----------------------------------------------------------------------")
 	print("		PADRÕES DE TAMANHO "+str(k)+" ENCONTRADOS "+str(ocs)+" OU MAIS VEZES")
 	print("----------------------------------------------------------------------")
@@ -318,7 +249,7 @@ def ex2():
 
 if __name__=="__main__":
 
-	#ex1()
+	ex1()
 
 	ex2()
 
